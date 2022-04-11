@@ -14,7 +14,7 @@ pipeline {
         stage('MVN Build') {
           steps{
              sh "mvn -Dmaven.test.failure.ignore=true clean package"
-             sh "mv /var/lib/jenkins/workspace/maven-pipeline/target/websocket-demo-0.0.1-SNAPSHOT.jar /var/lib/jenkins/workspace/maven-pipeline/target/chatapp.jar"
+             sh "mv target/websocket-demo-0.0.1-SNAPSHOT.jar target/chatapp.jar"
           }
        }
        stage('MVN Testing') {
@@ -61,7 +61,7 @@ pipeline {
             
           steps{
             sshagent(['ssh-pass-ansible']) {
-              
+              sh "scp -r -o StrictHostKeyChecking=no target/chatapp.jar root@tomcat:/opt/tomcat/webapps"
               }
 
           }
