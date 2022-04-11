@@ -16,7 +16,7 @@
       apt: name=curl state=latest
       
     - name: Downloading Apache Tomcat tar.
-      shell: wget http://us.mirrors.quenda.co/apache/tomcat/tomcat-8/v8.5.56/bin/apache-tomcat-8.5.56.tar.gz      
+      shell: wget https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.78/bin/apache-tomcat-8.5.78.tar.gz     
       args:
         chdir: /tmp
     - name: Creating Apache Tomcat home directory.
