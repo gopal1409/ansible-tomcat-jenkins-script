@@ -10,7 +10,7 @@ pipeline {
         stage(" execute Ansible") {
            steps {
                sshagent(['ssh-pass-ansible']) {
-                 ansiblePlaybook inventory:  'dev.inv', playbook: 'tomcat.yml'
+                 ansiblePlaybook inventory:  'dev.inv',disableHostKeyChecking: true,  playbook: 'tomcat.yml'
               }
                 
             }    
