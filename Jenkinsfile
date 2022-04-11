@@ -14,6 +14,7 @@ pipeline {
         stage('MVN Build') {
           steps{
              sh "mvn -Dmaven.test.failure.ignore=true clean package"
+             sh "mv /var/lib/jenkins/workspace/maven-pipeline/target/websocket-demo-0.0.1-SNAPSHOT.jar /var/lib/jenkins/workspace/maven-pipeline/target/chatapp.jar"
           }
        }
        stage('MVN Testing') {
@@ -35,16 +36,32 @@ pipeline {
             }
        }
        stage('Get ansible code') {
+           when {
+                expression {choice == '1'}
+            }
+           
           steps{
              
                 git "https://github.com/gopal1409/ansible-tomcat-jenkins-script.git"
           }
        }
         stage('execute ansible') {
+            when {
+                expression {choice == '2'}
+            }
           steps{
              
                 sshagent(['ssh-pass-ansible']) {
                  ansiblePlaybook inventory:  'dev.inv',disableHostKeyChecking: true,  playbook: 'tomcat.yml'
+              }
+
+          }
+       }
+       stage('deploy jar in tomcat') {
+            
+          steps{
+            sshagent(['ssh-pass-ansible']) {
+              
               }
 
           }
