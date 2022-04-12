@@ -45,26 +45,6 @@ pipeline {
                 git "https://github.com/gopal1409/ansible-tomcat-jenkins-script.git"
           }
        }
-        stage('execute ansible') {
-            when {
-                expression {choice == '2'}
-            }
-          steps{
-             
-                sshagent(['ssh-pass-ansible']) {
-                 ansiblePlaybook inventory:  'dev.inv',disableHostKeyChecking: true,  playbook: 'tomcat.yml'
-              }
-
-          }
-       }
-       stage('deploy jar in tomcat') {
-            
-          steps{
-            sshagent(['ssh-pass-ansible']) {
-              sh "scp -r -o StrictHostKeyChecking=no target/chatapp.jar root@tomcat:/opt/tomcat/webapps"
-              }
-
-          }
-       }
+        
     }
 }
