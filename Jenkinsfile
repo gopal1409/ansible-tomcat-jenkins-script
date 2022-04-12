@@ -34,17 +34,5 @@ pipeline {
                     archiveArtifacts 'target/*.jar'
                 }
             }
-       }
-       stage('Get ansible code') {
-           when {
-                expression {choice == '1'}
-            }
-           
-          steps{
-             
-                git "https://github.com/gopal1409/ansible-tomcat-jenkins-script.git"
-          }
-       }
-        
     }
 }
